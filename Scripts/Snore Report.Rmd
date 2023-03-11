@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Snore Project
 
 How do people's lifestyle and habits affect the length and quality of their sleep?
-Does gender affect sleep quality?
+Does gender also have an effect on sleep quality?
 People who consume more alcohol, caffeine and tobacco are likely to sleep less efficiently.
 Conversely people who exercise lore and likely to sleep more efficiently.
 
