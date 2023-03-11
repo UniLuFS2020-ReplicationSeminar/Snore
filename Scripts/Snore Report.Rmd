@@ -1,0 +1,30 @@
+---
+title: "Snore"
+output: html_document
+date: "2023-03-11"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Snore Project
+
+How do people's lifestyle and habits affect the length and quality of their sleep?
+Does gender affect sleep quality?
+People who consume more alcohol, caffeine and tobacco are likely to sleep less efficiently.
+Conversely people who exercise lore and likely to sleep more efficiently.
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
