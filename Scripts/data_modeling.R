@@ -7,6 +7,10 @@ library(stargazer)
 slsc <- normalize(x = sl1[,3:7])
 summary(slsc)
 
+# Get a first look at data
+head(sleep, n = 5)
+str(sleep)
+
 model1<-lm(slsc$Sleep.efficiency~slsc$Caffeine.consumption+slsc$Alcohol.consumption+slsc$Smoking.status)
 summary(model1)
 summary(model1)$coefficient
