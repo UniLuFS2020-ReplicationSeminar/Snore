@@ -21,6 +21,14 @@ print(nan_val_count)
 som <- sum(nan_val_count)
 cat("Total:", som, " ~ ", round(som / (nrow(slsc) * ncol(slsc)) * 100), "% of the dataset\n")
 
+# replace null values with mean-------------------------------------------------
+
+library(dplyr) # load the dplyr package
+
+slsc$Awakenings[is.na(slsc$Awakenings)] <- mean(slsc$Awakenings, na.rm = TRUE)
+slsc$`Caffeine consumption`[is.na(slsc$`Caffeine consumption`)] <- mean(slsc$`Caffeine consumption`, na.rm = TRUE)
+slsc$`Alcohol consumption`[is.na(slsc$`Alcohol consumption`)] <- mean(slsc$`Alcohol consumption`, na.rm = TRUE)
+slsc$`Exercise frequency`[is.na(slsc$`Exercise frequency`)] <- mean(slsc$`Exercise frequency`, na.rm = TRUE)
 
 #--------------------------------------------------------------------------------
 model1<-lm(slsc$Sleep.efficiency~slsc$Caffeine.consumption+slsc$Alcohol.consumption+slsc$Smoking.status)
