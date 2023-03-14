@@ -7,13 +7,6 @@ library(ggplot2)
 # Import data
 sleep_data <- import("C:\\Users\\amand\\OneDrive\\Bureau\\Snore\\Sleep_Efficiency.csv")
 
-# Check fraction of NAs in dataset
-NA_distribution <- sleep_data %>%
-  is.na %>%
-  colSums/nrow(sleep_data)
-
-# Most columns have no missing data, caffeine consumption(6%) and awakenings(4%) are highest
-
 # ------- 2. Data Visualisation 1: Impact of caffeine consumption on sleep efficiency
 
 # Histogram of age distribution
@@ -57,7 +50,7 @@ caffeine_sleep_efficiency <- ggplot(sleep_data_factor, aes(x=caffeine_group, y=`
 # Do they drink more/less alcohol? Is gender an important factor? Could caffeine consumption
 # affect the type or duration of sleep?
 
-# ------- 2. Data Visualisation 1: Impact of gender and caffeine consumption on sleep efficiency
+# ------- 2. Data Visualisation 2: Impact of gender and caffeine consumption on sleep efficiency
 
 # Plot using the same code as above but split by gender
 caffeine_gender_sleep_efficiency <- ggplot(sleep_data_factor, aes(x=caffeine_group, y=`Sleep efficiency`, fill=Gender)) + 
@@ -71,5 +64,28 @@ caffeine_gender_sleep_efficiency <- ggplot(sleep_data_factor, aes(x=caffeine_gro
 # consumption, but is it significant? For women consuming no or high levels of caffeine seems
 # to increase sleep efficiency, while low to medium amounts decrease it.(Quadratic shape?) 
 # Mens' sleep efficiency seems to increase with the amount of caffeine consumed. Seems unlikely caused
-# by caffeine affecting men and women in different ways, instead likely yo have different lifestyles.
+# by caffeine affecting men and women in different ways, instead likely to have different lifestyles.
+
+# -------  Data Visualisation 3. Comparison of lifestyle choices between genders
+# Histogram of exercise frequency by gender
+histogram_exercise <- sleep_data %>% 
+  drop_na(`Exercise frequency`) %>% 
+  ggplot(aes(`Exercise frequency`, fill=Gender))+
+  geom_histogram(stat="count", position="dodge")+
+  ggtitle("Difference in exercise frequency between men and women")
+
+#Men seem to exercise considerably more than women
+# Histogram of alcohol consumption by gender
+histogram_alcohol <- sleep_data %>% 
+  drop_na(`Alcohol consumption`) %>% 
+  ggplot(aes(`Alcohol consumption`, fill=Gender))+
+  geom_histogram(stat="count", position="dodge")+
+  ggtitle("Difference in alcohol consumption between men and women")
+# Not big difference in alcohol consumption between genders, most
+# participants in sleep study don't rink at all
+
+
+
+
+
 
