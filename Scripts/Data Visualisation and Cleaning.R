@@ -75,6 +75,7 @@ histogram_exercise <- sleep_data %>%
   ggtitle("Difference in exercise frequency between men and women")
 
 #Men seem to exercise considerably more than women
+
 # Histogram of alcohol consumption by gender
 histogram_alcohol <- sleep_data %>% 
   drop_na(`Alcohol consumption`) %>% 
@@ -82,7 +83,43 @@ histogram_alcohol <- sleep_data %>%
   geom_histogram(stat="count", position="dodge")+
   ggtitle("Difference in alcohol consumption between men and women")
 # Not big difference in alcohol consumption between genders, most
-# participants in sleep study don't rink at all
+# participants in sleep study don't drink at all
+
+# ------- 2. Data Visualisation 4: Impact of exercise frequency on sleep efficiency
+
+# Histogram of exercise frequency distribution
+histogram_exercise <- sleep_data %>% 
+  drop_na(`Exercise frequency`) %>% 
+  ggplot(aes(`Exercise frequency`))+
+  geom_histogram(stat="count")
+
+# Divide exercise frequency into groups:
+# None=0
+# Low+ 1
+# Medium=2-3
+# High =4-5
+
+sleep_data_exercise_groups <- sleep_data %>% 
+  drop_na(`Exercise frequency`) %>% 
+  mutate(exercise_group=case_when(`Exercise frequency`==0 ~ "None",
+                                  `Exercise frequency` ==1 ~ "Low (1)",
+                                  `Exercise frequency` >1 &`Exercise frequency` <4 ~ "Medium (2-3)",
+                                  `Exercise frequency` >=4 & `Exercise frequency` <6 ~ "High (4-5)"))
+
+# Convert exercise groups column to factor variable 
+sleep_data_factor_exercise <- sleep_data_exercise_groups %>% 
+  mutate(exercise_group= factor(exercise_group,
+                                ordered=TRUE,
+                                levels=c("None","Low (1)","Medium (2-3)","High (4-5)")))
+
+
+# Box plots indicating how exercise frequency affects sleep efficiency
+exercise_sleep_efficiency <- ggplot(sleep_data_factor_exercise, aes(x=exercise_group, y=`Sleep efficiency`)) + 
+  geom_boxplot()+
+  xlab(" Exercise Frequency")+
+  ylab("Sleep Efficiency")+
+  ggtitle("Effect of Exercise frequency on Sleep Efficiency")+
+  theme_minimal()
 
 
 
