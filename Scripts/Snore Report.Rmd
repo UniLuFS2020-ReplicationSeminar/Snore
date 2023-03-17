@@ -1,38 +1,129 @@
 ---
 title: "Snore"
-output: html_document
 date: "2023-03-11"
+output: 
+    html_document:
+      toc: true
+      toc_float: true
+      theme: united
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+#install.packages("tidyverse")
+#nstall.packages("dplyr")
+library("rio")
+library("dplyr")
+library("tidyverse")
+library("ggplot2")
+# ------- 1. Importing and Cleaning
+# Import data
+sleep_data <- import("C:\\Users\\User\\Desktop\\data mining\\Snore\\Sleep_Efficiency.csv")
 ```
 
 # Snore Project
-##Introduction
+## Introduction
 
 The aim of the project is to analyze the factors that are effecting sleep efficiency. The data set
 is one of the Kaggle dataset and called "Sleep Efficiency Dataset". The dataset provides data on a group of test volunteers and their sleeping habits. Each subject has a "Subject ID" and "Sleep efficiency" feature is a measure of the proportion of time spent in bed that is actually spent asleep.
 The data also contains information on each subject's caffeine and alcohol use in the 24 hours before bedtime, smoking status, and exercise frequency.
 
-###Research Question
+### Research Question
 How do people's lifestyle and habits affect the length and quality of their sleep?
 Does gender also have an effect on sleep quality?
-###Hypotheses
+
+### Hypotheses
 People who consume more alcohol, caffeine and tobacco are likely to sleep less efficiently.
 Conversely, people who exercise more are likely to sleep more efficiently.
 
+### 2. Data Visualisation 1: Impact of caffeine consumption on sleep efficiency
 
-```{r cars}
-summary(cars)
+```{r}
+
+library("dplyr")
+# Histogram of age distribution
+histogram_caffeine <- sleep_data %>% 
+  na.omit(`Caffeine consumption`) %>% 
+  ggplot(aes(`Caffeine consumption`))+
+  geom_histogram(stat="count")
+
+# Divide caffeine consumption into groups:
+# None=0
+# Low+ 25
+# Medium=50
+# High >=75
+
+sleep_data_caffeine_groups <- sleep_data %>% 
+  na.omit(`Caffeine consumption`) %>% 
+  mutate(caffeine_group=case_when(`Caffeine consumption`==0 ~ "None",
+                                  `Caffeine consumption` ==25 ~ "Low (25mg)",
+                                  `Caffeine consumption` ==50 ~ "Medium (50mg)",
+                                  TRUE ~ "High (75mg-200mg)"))
+
+# Convert caffeine consumption groups column to factor variable 
+sleep_data_factor <- sleep_data_caffeine_groups %>% 
+  mutate(caffeine_group= factor(caffeine_group,
+                                ordered=TRUE,
+                                levels=c("None","Low (25mg)","Medium (50mg)","High (75mg-200mg)")))
+
+
+# Box plots indicating how caffeine consumption affects sleep efficiency
+caffeine_sleep_efficiency <- ggplot(sleep_data_factor, aes(x=caffeine_group, y=`Sleep efficiency`)) + 
+  geom_boxplot()+
+  xlab(" Amount of Caffeine Consumed")+
+  ylab("Sleep Efficiency")+
+  ggtitle("Effect of Caffeine Consumption on Sleep Efficiency")+
+  theme_minimal()
+
+# Counter intuitively appears that drinking more coffee improves sleep efficiency i.e 
+# amount of time in bed spent asleep, but is this difference statistically significant? The median
+# sleep efficiency in the high group is larger than the others, but all groups overlap.
+# Why could this be? Do people who drink more coffee, exercise more which could lead to more efficient sleep? 
+# Do they drink more/less alcohol? Is gender an important factor? Could caffeine consumption
+# affect the type or duration of sleep?
+
 ```
 
 ## Including Plots
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+
+```{r}
+# ------- 2. Data Visualisation 2: Impact of gender and caffeine consumption on sleep efficiency
+
+# Plot using the same code as above but split by gender
+caffeine_gender_sleep_efficiency <- ggplot(sleep_data_factor, aes(x=caffeine_group, y=`Sleep efficiency`, fill=Gender)) + 
+  geom_boxplot()+
+  xlab(" Amount of Caffeine Consumed")+
+  ylab("Sleep Efficiency")+
+  ggtitle("Effect of Caffeine Consumption and Gender on Sleep Efficiency")+
+  theme_minimal()
+
+# Seems to be a difference in the median sleep efficiency between the genders for each level of caffeine 
+# consumption, but is it significant? For women consuming no or high levels of caffeine seems
+# to increase sleep efficiency, while low to medium amounts decrease it.(Quadratic shape?) 
+# Mens' sleep efficiency seems to increase with the amount of caffeine consumed. Seems unlikely caused
+# by caffeine affecting men and women in different ways, instead likely to have different lifestyles.
+
+# -------  Data Visualisation 3. Comparison of lifestyle choices between genders
+# Histogram of exercise frequency by gender
+histogram_exercise <- sleep_data %>% 
+  na.omit(`Exercise frequency`) %>% 
+  ggplot(aes(`Exercise frequency`, fill=Gender))+
+  geom_histogram(stat="count", position="dodge")+
+  ggtitle("Difference in exercise frequency between men and women")
+
+#Men seem to exercise considerably more than women
+# Histogram of alcohol consumption by gender
+histogram_alcohol <- sleep_data %>% 
+  na.omit(`Alcohol consumption`) %>% 
+  ggplot(aes(`Alcohol consumption`, fill=Gender))+
+  geom_histogram(stat="count", position="dodge")+
+  ggtitle("Difference in alcohol consumption between men and women")
+# Not big difference in alcohol consumption between genders, most
+# participants in sleep study don't rink at all
+
+
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
