@@ -19,9 +19,10 @@ library("tidyverse")
 library("ggplot2")
 library("BBmisc")
 library("stargazer")
+library("here")
 # ------- 1. Importing and Cleaning
 # Import data
-sleep_data <- import("C:\\Users\\User\\Desktop\\data mining\\Snore\\Sleep_Efficiency.csv")
+sleep_data <-import(here("Sleep_Efficiency.csv"))
 ```
 
 # Snore Project
@@ -41,13 +42,14 @@ The data also contains information on each subject's caffeine and alcohol use in
 
 ### 2. Data Visualisation 1: Impact of caffeine consumption on sleep efficiency
 
-```{r}
+```{r, warning=FALSE}
 library("dplyr")
 # Histogram of age distribution
 histogram_caffeine <- sleep_data %>% 
   na.omit(`Caffeine consumption`) %>% 
   ggplot(aes(`Caffeine consumption`))+
   geom_histogram(stat="count")
+histogram_caffeine
 # Divide caffeine consumption into groups:
 # None=0
 # Low+ 25
@@ -71,6 +73,7 @@ caffeine_sleep_efficiency <- ggplot(sleep_data_factor, aes(x=caffeine_group, y=`
   ylab("Sleep Efficiency")+
   ggtitle("Effect of Caffeine Consumption on Sleep Efficiency")+
   theme_minimal()
+caffeine_sleep_efficiency
 ```
 Box plots indicating how caffeine consumption affects sleep efficiency.
 Counter intuitively appears that drinking more coffee improves sleep efficiency i.e amount of time in bed spent asleep, but is this difference statistically significant? The median
@@ -92,6 +95,7 @@ caffeine_gender_sleep_efficiency <- ggplot(sleep_data_factor, aes(x=caffeine_gro
   ylab("Sleep Efficiency")+
   ggtitle("Effect of Caffeine Consumption and Gender on Sleep Efficiency")+
   theme_minimal()
+caffeine_gender_sleep_efficiency
 ```
 
 Seems to be a difference in the median sleep efficiency between the genders for each level of caffeine consumption, but is it significant? For women consuming no or high levels of caffeine seems to increase sleep efficiency, while low to medium amounts decrease it.(Quadratic shape?) 
@@ -99,19 +103,21 @@ Seems to be a difference in the median sleep efficiency between the genders for 
 Mens' sleep efficiency seems to increase with the amount of caffeine consumed. Seems unlikely caused by caffeine affecting men and women in different ways, instead likely to have different lifestyles.
 
 ### 2. Data Visualisation 3. Comparison of lifestyle choices between genders
-```{r}
+```{r,warning=FALSE}
 # Histogram of exercise frequency by gender
 histogram_exercise <- sleep_data %>% 
   drop_na(`Exercise frequency`) %>% 
   ggplot(aes(`Exercise frequency`, fill=Gender))+
   geom_histogram(stat="count", position="dodge")+
   ggtitle("Difference in exercise frequency between men and women")
+histogram_exercise
 # Histogram of alcohol consumption by gender
 histogram_alcohol <- sleep_data %>% 
   drop_na(`Alcohol consumption`) %>% 
   ggplot(aes(`Alcohol consumption`, fill=Gender))+
   geom_histogram(stat="count", position="dodge")+
   ggtitle("Difference in alcohol consumption between men and women")
+histogram_alcohol
 ```
 Men seem to exercise considerably more than women.
 Not big difference in alcohol consumption between genders, most participants in sleep study don't rink at all
