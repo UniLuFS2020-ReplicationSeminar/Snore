@@ -19,9 +19,10 @@ library("tidyverse")
 library("ggplot2")
 library("BBmisc")
 library("stargazer")
+library("here")
 # ------- 1. Importing and Cleaning
 # Import data
-sleep_data <- import("C:\\Users\\amand\\OneDrive\\Bureau\\Snore\\Sleep_Efficiency.csv")
+sleep_data <-import(here("Sleep_Efficiency.csv"))
 ```
 
 # Snore Project

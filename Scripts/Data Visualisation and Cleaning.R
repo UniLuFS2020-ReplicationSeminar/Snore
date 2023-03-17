@@ -5,7 +5,7 @@ library(ggplot2)
 
 # ------- 1. Importing and Cleaning
 # Import data
-sleep_data <- import("C:\\Users\\amand\\OneDrive\\Bureau\\Snore\\Sleep_Efficiency.csv")
+sleep_data <- import("Sleep_Efficiency.csv")
 
 # ------- 2. Data Visualisation 1: Impact of caffeine consumption on sleep efficiency
 
@@ -17,9 +17,9 @@ histogram_caffeine <- sleep_data %>%
 
 # Divide caffeine consumption into groups:
 # None=0
-# Low+ 25
+# Low=25
 # Medium=50
-# High >=75
+# High>=75
 
 sleep_data_caffeine_groups <- sleep_data %>% 
   drop_na(`Caffeine consumption`) %>% 
@@ -43,7 +43,7 @@ caffeine_sleep_efficiency <- ggplot(sleep_data_factor, aes(x=caffeine_group, y=`
   ggtitle("Effect of Caffeine Consumption on Sleep Efficiency")+
   theme_minimal()
 
-# Counter intuitively appears that drinking more coffee improves sleep efficiency i.e 
+# Counter intuitively it appears that drinking more coffee improves sleep efficiency i.e 
 # amount of time in bed spent asleep, but is this difference statistically significant? The median
 # sleep efficiency in the high group is larger than the others, but all groups overlap.
 # Why could this be? Do people who drink more coffee, exercise more which could lead to more efficient sleep? 
@@ -74,7 +74,7 @@ histogram_exercise <- sleep_data %>%
   geom_histogram(stat="count", position="dodge")+
   ggtitle("Difference in exercise frequency between men and women")
 
-#Men seem to exercise considerably more than women
+# Men seem to exercise considerably more than women
 # Histogram of alcohol consumption by gender
 histogram_alcohol <- sleep_data %>% 
   drop_na(`Alcohol consumption`) %>% 
@@ -82,7 +82,7 @@ histogram_alcohol <- sleep_data %>%
   geom_histogram(stat="count", position="dodge")+
   ggtitle("Difference in alcohol consumption between men and women")
 # Not big difference in alcohol consumption between genders, most
-# participants in sleep study don't rink at all
+# participants in sleep study don't drink at all
 
 
 
