@@ -9,6 +9,6 @@ The data also contains information on each subject's caffeine and alcohol use in
 ### Research Question
 How do people's lifestyle and habits affect the length and quality of their sleep?
 
-###H ypotheses
+### Hypotheses
 People who consume more alcohol, caffeine and tobacco are likely to sleep less efficiently.
 Conversely, people who exercise more are likely to sleep more efficiently.
