@@ -165,7 +165,7 @@ stargazer(model1, type='text')
 
 ## Results & Conclusion
 
-In this exercise, we analyzed the efect of certain habits on people's sleeping quality. We used multiple regression analysis in our model and tried to understand the effect of alcohol, tobacco and caffeine consumption and exercise frequency on sleep efficiency. 
+In this exercise, we analyzed the effect of certain habits on people's sleeping quality. We used multiple regression analysis in our model and tried to understand the effect of alcohol, tobacco and caffeine consumption and exercise frequency on sleep efficiency. 
 
 The results of the regression table show that alcohol and tobacco consumption and exercise frequency are factors have statistically significant impact on sleep efficiency(p>0.05). However, caffeine consumption and gender had no statistically significant effect on sleep efficiency.  
 
