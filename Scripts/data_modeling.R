@@ -29,7 +29,7 @@ slsc$`Alcohol consumption`[is.na(slsc$`Alcohol.consumption`)] <- mean(slsc$`Alco
 slsc$`Exercise frequency`[is.na(slsc$`Exercise.frequency`)] <- mean(slsc$`Exercise.frequency`, na.rm = TRUE)
 slsc$`Sleep efficiency`[is.na(slsc$`Sleep.efficiency`)] <- mean(slsc$`Sleep.efficiency`, na.rm = TRUE)
 #--------------------------------------------------------------------------------
-model1<-lm(sleep_data$`Sleep efficiency`~sleep_data$`Caffeine consumption`+sleep_data$`Alcohol consumption`+sleep_data$`Smoking status`+sleep_data$`Exercise frequency`)
+model1<-lm(sleep_data$`Sleep efficiency`~sleep_data$`Caffeine consumption`+sleep_data$`Alcohol consumption`+sleep_data$`Smoking status`+sleep_data$`Exercise frequency`+sleep_data$Gender)
 summary(model1)
 summary(model1)$coefficient
 confint(model1)
